@@ -1,0 +1,6 @@
+// Налаштування Worker для Wrangler: назва, головний файл, версія платформи.
+{
+  "name": "lr1-games",                  // назва Worker, частина адреси API
+  "main": "src/index.js",               // файл з функцією fetch
+  "compatibility_date": "2026-09-01"    // версія поведінки платформи Workers
+}

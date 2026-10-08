@@ -1,0 +1,21 @@
+{
+  "name": "lr1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "wrangler": "^4.148.0"
+  },
+  "dependencies": {
+    "hono": "^4.13.13",
+    "jose": "^6.2.12",
+    "zod": "^4.6.5"
+  }
+}
