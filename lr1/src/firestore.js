@@ -43,3 +43,26 @@ export async function firestore(env, path, body) {
   if (!r.ok) throw new Error(`Firestore ${r.status}: ${await r.text()}`);   // текст помилки, зокрема посилання на індекс
   return r.json();
 }
+
+// Firestore зберігає кожне значення з позначкою типу: {"stringValue": "легка"}, {"integerValue": "4"}.
+function toValue(value) {
+  if (typeof value === "boolean") return { booleanValue: value };
+  if (typeof value === "number") return Number.isInteger(value) ? { integerValue: String(value) } : { doubleValue: value };
+  return { stringValue: value };
+}
+
+// Документ Firestore як звичайний об’єкт: id з кінця шляху документа, значення без позначок типу.
+export function fromDoc(doc) {
+  const item = { id: doc.name.split("/").pop() };
+  for (const [field, value] of Object.entries(doc.fields)) {
+    item[field] = "integerValue" in value ? Number(value.integerValue) : Object.values(value)[0];   // integerValue приходить рядком
+  }
+  return item;
+}
+
+// Об’єкт тіла POST як поля документа Firestore.
+export const toFields = (b) => Object.fromEntries(Object.entries(b).map(([field, value]) => [field, toValue(value)]));
+// Одна умова запиту: поле, операція (EQUAL, GREATER_THAN, …), значення.
+export const where = (field, op, value) => ({ fieldFilter: { field: { fieldPath: field }, op, value: toValue(value) } });
+// Кілька умов, що мають виконуватися разом.
+export const and = (...filters) => ({ compositeFilter: { op: "AND", filters } });
