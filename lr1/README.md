@@ -2,7 +2,7 @@
 
 Варіант: приклад (прокат ігор). Платформа: Cloudflare Workers + Firestore, мова JavaScript.
 
-Адреса API: з'явиться після етапу 3.
+Адреса API: https://lr1-games.omahas-edu.workers.dev
 
 ## Запити
 
